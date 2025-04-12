@@ -2,20 +2,38 @@
 <html>
 <head>
     <script>
+        // Redirect mappings using query parameters
         const URL_MAPPINGS = {
-            '/twitter': 'https://twitter.com/catsonluna',
-            '/github': 'https://github.com/catsonluna',
-            '/tools': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSPV6qnBZ_dEv7QLW11tsXuAvmKocV0fefxnDpAIfyIGQBeM7V87NR5wcfW8HgFUvxlFkqcq16EOHPu/pubhtml'
+            'tools': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSPV6qnBZ_dEv7QLW11tsXuAvmKocV0fefxnDpAIfyIGQBeM7V87NR5wcfW8HgFUvxlFkqcq16EOHPu/pubhtml',
+            'twitter': 'https://twitter.com/catsonluna',
+            'github': 'https://github.com/catsonluna',
         };
-        const currentPath = window.location.pathname.toLowerCase();
-        const targetUrl = URL_MAPPINGS[currentPath] || 'https://shortcuts.catsonluna.com';
+        
+        const DEFAULT_URL = 'https://catsonluna.com';
+
+        const queryParams = new URLSearchParams(window.location.search);
+        const paramKeys = Array.from(queryParams.keys());
+        
+        const redirectKey = paramKeys.length > 0 
+            ? paramKeys[0].toLowerCase() 
+            : null;
+
+        const targetUrl = redirectKey 
+            ? (URL_MAPPINGS[redirectKey] || DEFAULT_URL)
+            : DEFAULT_URL;
 
         window.location.replace(targetUrl);
     </script>
+    
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=https://catsonluna.com">
+    </noscript>
 </head>
 <body>
     <noscript>
-        <h1>Redirects require JavaScript. Please enable it.</h1>
+        <h1>Redirect Required</h1>
+        <p>JavaScript is required for redirects. Please enable it or visit:</p>
+        <a href="https://catsonluna.com">Default Fallback Link</a>
     </noscript>
 </body>
 </html>
